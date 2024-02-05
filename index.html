@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Converter Tool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        header {
+            background-color: #3498db;
+            padding: 10px;
+            color: #fff;
+            font-size: 24px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            resize: none;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        #outputContainer {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #outputImage {
+            max-width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #downloadLink {
+            padding: 10px;
+            background-color: #e74c3c;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        #downloadLink:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Image Converter Tool
+    </header>
+    <main>
+        <form id="imageForm">
+            <label for="imageInput">Embed Code:</label>
+            <textarea id="embedCode" rows="4" cols="50"></textarea><br>
+            <button type="button" onclick="downloadApk()">Download APK</button>
+        </form>
+
+        <div id="outputContainer">
+            <img id="outputImage" alt="Converted Image">
+            <a id="downloadLink" download="converted_image.jpg" style="display:none;">Download Image</a>
+        </div>
+    </main>
+
+    <script>
+        function downloadApk() {
+            var embedCode = document.getElementById('embedCode').value;
+
+            // Send embed code to server to create APK and provide download link
+            // This is a simplified example, in a real-world scenario, you would need server-side code.
+
+            // Example: Send embed code to server using fetch
+            fetch('/createApk', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ embedCode }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.downloadLink) {
+                    window.location.href = data.downloadLink;
+                } else {
+                    alert('Error creating APK');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
